@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/transiciones.css">
+    <title>Pomodoro</title>
+</head>
+<body>
+    <main>
+        <div class="main-container">
+            <section class="section-top">
+                <div class="section-top__title-container">
+                    <h1 class="section-top__title">Pomodoro</h1>
+                    <a href="">
+                        <img src="./assets/icons8-gear-24.png" alt="">
+                        <p>Ajustes</p>
+                    </a>
+                </div>
+            </section>
+
+            <div class="menu-ajustes">
+                <div class="menu-ajustes__title">
+                    <p >Ajustes</p>
+
+                </div>
+                <div class="menu-ajustes__container">
+                    <p class="menu-ajustes__subtitle">TEMPORIZADOR</p>
+                    <div class="menu-ajustes__tiempos-container">
+                        <p class="menu-ajustes__title-ajuste">Tiempo (minutos)</p>
+                        <div class="menu-ajustes__inputs-container">
+                            <div>
+                                <label for="">Pomodoro</label>
+                                <input type="number" value="25" min="1" id="pomo-time-ajustes">
+                            </div>
+                            <div>
+                                <label for="">Descanso corto</label>
+                                <input type="number" value="5" min="1" id="break-time-ajustes">
+                            </div>
+                            <div>
+                                <label for="">Descanso largo</label>
+                                <input type="number" value="15" min="1" id="long-time-ajustes">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="menu-ajustes__auto-break menu-ajustes__ajuste">
+                        <p class="menu-ajustes__title-ajuste">Descansos automáticos</p>
+                        <input type="checkbox" name="" id="auto-break">
+                    </div>
+                    <div class="menu-ajustes__auto-pomo menu-ajustes__ajuste">
+                        <p class="menu-ajustes__title-ajuste">Pomodoros automáticos</p>
+                        <input type="checkbox" name="" id="auto-pomo">
+                    </div>
+                    <div class="menu-ajustes__intervalos-long menu-ajustes__ajuste">
+                        <p class="menu-ajustes__title-ajuste">Intervalo de descansos largos</p>
+                        <input type="number" value="4" min="1" id="long-break-interval">
+                    </div>
+                </div>
+                <div class="menu-ajustes__btn-cambios-container">
+                    <button class="menu-ajustes__btn-cambios" id="btn-save-settings">GUARDAR</button>
+                </div>
+            </div>
+
+            <section class="section-mid">
+                <div class="section-mid__ciclos-container">
+                    <div class="section-mid__ciclos">
+                        <button class="ciclos-select" id="pomo">Pomo<span>doro</span></button>
+                        <button id="break"><span>Descanso </span>Corto</button>
+                        <button id="long"><span>Descanso </span>Largo</button>
+                    </div>
+                    <div class="section-mid__tiempo">
+                        <p class="minuto"></p>
+                        <p class="segundo">00</p>
+                    </div>
+                    <div class="section-mid__btn">
+                        <button>Comenzar</button>
+                        <img src="./assets/icons8-end-60.png" alt="">
+                    </div>
+                </div>
+                <div class="section-mid__cantidad-ciclos">
+                    <p class="section-mid__nrCiclos">0</p>
+                    <p class="section-mid__msgCiclos">¡Hora de enforcarse!</p>
+                </div>
+            </section>
+
+            <section class="section-bottom">
+                <div>
+                    <p>Tareas</p>
+                </div>
+                <div>
+                    <img src="./assets/icons8-more-30.png" alt="">
+                </div>     
+            </section>
+        </div>
+    </main>
+    <script src="./js/main.js"></script>
+    <script src="./js/temporizador.js"></script>
+</body>
+</html>

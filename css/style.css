@@ -1,0 +1,323 @@
+body{
+    width: 100%;
+    height: 100vh;
+}
+main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: var(--color);
+}
+.main-container {
+    width: 620px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--color);
+}
+button:not(.section-mid__btn button):active,
+a:active {
+    transform: translateY(2px);
+}
+
+/* section-top */
+.section-top {
+    position: relative;
+    width: 100%;
+    height: 60px;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.section-top::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.section-top__title-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.section-top__title {
+    font-size: 2rem;
+    font-weight: bold;
+}
+.section-top__title-container a{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    color: var(--white-grey);
+    background-color: var(--soft-color);
+    font-size: 1.4rem;
+}
+.section-top__title-container img {
+    width: 20px;
+}
+
+
+/* section mid */
+.section-mid {
+    width: 75%;
+    height: 420px;
+    margin: 48px 48px 0px 48px; 
+}
+.section-mid__ciclos-container {
+    width: 100%;
+    height: 75%;
+    padding: 20px 40px 28px 40px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: var(--soft-color);
+    border-radius: 8px;
+}
+
+.section-mid__ciclos {
+    display: flex;
+    justify-content: space-between;
+}
+.section-mid__ciclos button {
+    font-weight: 600;
+    padding: 8px 12px 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.section-mid__tiempo {
+    display: flex;
+}
+.section-mid__tiempo p {
+    font-size: 12rem;
+    font-weight: bold;
+}
+.section-mid__tiempo p:nth-child(1)::after {
+    content: ':';
+}
+.section-mid__btn {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+.section-mid__btn img {
+   display: none;
+   width: 36px;
+   position: absolute;
+   top: 16px;
+   left: 230px;
+   cursor: pointer;
+}
+.section-mid__btn button {
+    min-width: 176px;
+    padding: 12px 24px;
+    border-radius: 4px;
+    position: relative;
+    box-shadow: rgb(235, 235, 235) 0px 6px 0px;
+
+    font-size: 2.8rem;
+    font-weight: 500;
+    cursor: pointer;
+
+    background-color: var(--white);
+    color: var(--color);
+}
+/* .section-mid__btn button:active {
+    transform: translateY(6px);
+    box-shadow: none;
+} */
+
+.section-mid__cantidad-ciclos {
+    width: 100%;
+    height: 25%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    gap: 8px;
+    border-radius: 8px;
+}
+.section-mid__cantidad-ciclos p:nth-child(1) {
+    color: var(--white-grey);
+}
+.section-mid__cantidad-ciclos p:nth-child(1)::before {
+    content: '#';
+    color: var(--white-grey);
+}
+
+.section-bottom {
+    width: 75%;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--white-grey);
+}
+.section-bottom div img {
+    width: 28px;
+    padding: 4px;
+    border-radius: 4px;
+    background-color: var(--soft-color);
+    cursor: pointer;
+}
+.section-bottom div img:active {
+    transform: translateY(2px);
+}
+
+
+.menu-ajustes {
+    width: 400px;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+
+    position: absolute;
+    top: 108px;
+    border-radius: 8px;
+
+    color: var(--black);
+    background-color: var(--white);
+    z-index: 1;
+    overflow: hidden;
+}
+.menu-ajustes__container {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding: 20px;
+}
+
+.menu-ajustes__subtitle {
+    font-weight: bold;
+    color: var(--soft-grey);
+}
+.menu-ajustes__title {
+    height: 20px;
+    display: flex;
+    align-items: center;
+
+    padding: 20px;
+    border-bottom: 1px solid var(--soft-grey);
+}
+
+.menu-ajustes__title p {
+    
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--soft-grey);
+}
+
+.menu-ajustes__title-ajuste {
+    font-size: 1.7rem;
+    font-weight: bold;
+    color: var(--dark-grey);
+    margin-bottom: 8px;
+}
+
+.menu-ajustes__inputs-container {
+    display: flex;
+}
+.menu-ajustes__inputs-container div {
+    width: 100%;
+}
+.menu-ajustes__inputs-container label {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: grey;
+}
+.menu-ajustes__inputs-container input {
+    width: 90%;
+    height: 32px;
+    border-radius: 4px;
+    padding: 8px;
+    margin-top: 4px;
+    background-color: var(--white-grey);
+}
+
+.menu-ajustes__ajuste {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.menu-ajustes__intervalos-long input {
+    width: 60px;
+    border-radius: 4px;
+    padding: 8px;
+    background-color: var(--white-grey);
+}
+.menu-ajustes__btn-cambios-container {
+    height: 70px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+    background-color: var(--white-grey);
+}
+.menu-ajustes__btn-cambios {
+    padding: 0px 18px 0px 18px;
+    border-radius: 4px;
+    margin: 10px;
+
+    cursor: pointer;
+
+    background-color: var(--dark-grey);
+    color: white;
+}
+
+
+
+@media screen and (max-width: 550px) {
+    .main-container {
+        width: 450px;
+        padding: 0px 20px;
+    }
+    .section-mid {
+        width: 95%;
+        margin-right: 0px;
+        margin-left: 0px;
+    }
+    .section-mid__tiempo p {
+        font-size: 10rem;
+    }
+    .section-bottom {
+        width: 95%;
+    }
+}
+@media screen and (max-width: 400px) {
+    .section-mid__ciclos span {
+        display: none;
+    }
+    .main-container {
+        width: 400px;
+    }
+    .section-mid {
+        width: 100%;
+        margin-right: 0px;
+        margin-left: 0px;
+    }
+    .section-mid__tiempo p {
+        font-size: 8rem;
+    }
+    .section-mid__tiempo p {
+        font-size: 8rem;
+    }
+    .section-bottom {
+        width: 100%;
+    }
+}
