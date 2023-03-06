@@ -3,7 +3,7 @@ const msgCiclos = document.querySelector('.section-mid__msgCiclos');
 const ciclosSelect = document.querySelectorAll('.section-mid__ciclos button');
 const btnComenzar = document.querySelector('.section-mid__btn button');
 const btnSkip = document.querySelector('.section-mid__btn img');
-const btnMenu = document.querySelector('.section-top__title-container a')
+const btnMenu = document.querySelector('.section-top__title-container a');
 const minuto = document.querySelector('.minuto');
 const segundo = document.querySelector('.segundo');
 const styleDocument = document.documentElement.style;
@@ -17,6 +17,9 @@ const autoBreak = document.getElementById('auto-break');
 const autoPomo = document.getElementById('auto-pomo');
 const intervalosLong = document.getElementById('long-break-interval');
 const btnGuardarSettings = document.getElementById('btn-save-settings');
+
+// Card tareas
+
 
 const objSettings = {
     autoStartBreaks: false,
