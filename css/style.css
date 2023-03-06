@@ -298,6 +298,9 @@ a:active {
     .section-bottom {
         width: 95%;
     }
+    .section-mid__btn img {
+        left: 200px;
+    }
 }
 @media screen and (max-width: 400px) {
     .section-mid__ciclos span {
@@ -319,5 +322,8 @@ a:active {
     }
     .section-bottom {
         width: 100%;
+    }
+    .section-mid__btn img {
+        left: 185px;
     }
 }
