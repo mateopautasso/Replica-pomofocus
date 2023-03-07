@@ -293,7 +293,7 @@ a:active {
     position: relative;
 }
 
-.card {
+.card__container {
     width: 100%;
     height: 64px;
     margin-bottom: 12px;
@@ -311,11 +311,15 @@ a:active {
 }
 
 .card-container__card--agregar {
+    display: flex;
     justify-content: center;
     align-items: center;
+
+    height: 64px;
     border-radius: 6px;
     margin-top: 12px;
     border: 2px dashed var(--soft-grey);
+
     background-color: var(--soft-color);
     cursor: pointer;
 }
