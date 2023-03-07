@@ -14,3 +14,15 @@
 .menu-settings-active {
     display: flex;
 }
+
+.tarea-checked {
+    opacity: 1!important;
+}
+.btn-tarea-checked {
+    background-color: var(--color)!important;
+}
+.agregar-tarea-active {
+    transform: scale(1);
+    transform-origin: top;
+    transition: all 0.2s;
+}

@@ -36,15 +36,15 @@
                         <p class="menu-ajustes__title-ajuste">Tiempo (minutos)</p>
                         <div class="menu-ajustes__inputs-container">
                             <div>
-                                <label for="">Pomodoro</label>
+                                <label for="pomo-time-ajustes">Pomodoro</label>
                                 <input type="number" value="25" min="1" id="pomo-time-ajustes">
                             </div>
                             <div>
-                                <label for="">Descanso corto</label>
+                                <label for="break-time-ajustes">Descanso corto</label>
                                 <input type="number" value="5" min="1" id="break-time-ajustes">
                             </div>
                             <div>
-                                <label for="">Descanso largo</label>
+                                <label for="long-time-ajustes">Descanso largo</label>
                                 <input type="number" value="15" min="1" id="long-time-ajustes">
                             </div>
                         </div>
@@ -70,9 +70,9 @@
             <section class="section-mid">
                 <div class="section-mid__ciclos-container">
                     <div class="section-mid__ciclos">
-                        <button class="ciclos-select" id="pomo">Pomo<span>doro</span></button>
-                        <button id="break"><span>Descanso </span>Corto</button>
-                        <button id="long"><span>Descanso </span>Largo</button>
+                        <button class="ciclos-select" id="pomo">Pomodoro</button>
+                        <button id="break">Descanso Corto</button>
+                        <button id="long">Descanso Largo</button>
                     </div>
                     <div class="section-mid__tiempo">
                         <p class="minuto"></p>
@@ -95,20 +95,29 @@
                         <p>Tareas</p>
                     </div>
                     <div>
-                        <img src="./assets/icons8-more-30.png" alt="">
+                        <img class="section-bottom__more-options-img" src="./assets/icons8-more-30.png" alt="">
                     </div> 
                 </div>
 
                 <div class="section-bottom__card-container card-container">
-                    <div class="card-container__card-agregar">
-                        <img src="./assets/icons8-add-24.png" alt="">
-                        <p>Agregar</p>
+
+                    <div class="card-container__card card">
+                        <div class="card__left">
+                            <div class="card__check"></div>
+                            <p class="card__title-tarea">Termincar cards<span></span></p>
+                        </div>
+                        <div class="card__right">
+                            <div>
+                                <p>0<span>/</span></p><p>1</p>
+                            </div>
+                            <img src="./assets/icons8-more-48-grey.png" alt="">
+                        </div>
                     </div>
                 </div>
             </section>
         </div>
     </main>
     <script src="./js/main.js"></script>
-    <script src="./js/temporizador.js"></script>
+    <script src="./js/tasks.js"></script>
 </body>
 </html>

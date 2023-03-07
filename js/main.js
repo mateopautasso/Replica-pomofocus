@@ -18,8 +18,6 @@ const autoPomo = document.getElementById('auto-pomo');
 const intervalosLong = document.getElementById('long-break-interval');
 const btnGuardarSettings = document.getElementById('btn-save-settings');
 
-// Card tareas
-
 
 const objSettings = {
     autoStartBreaks: false,
@@ -73,9 +71,9 @@ function transitionPomo(){
     styleDocument.setProperty('--color', 'rgb(186, 73, 73)');
     styleDocument.setProperty('--color-select', 'rgb(164, 78, 78)');
     styleDocument.setProperty('--soft-color', 'rgb(193, 92, 92)');
+    ciclosSelect[0].classList.add('ciclos-select');
     ciclosSelect[1].classList.remove('ciclos-select');
     ciclosSelect[2].classList.remove('ciclos-select');
-    ciclosSelect[0].classList.add('ciclos-select');
     btnComenzar.classList.remove('btnPresionado');
 
     objMidSection.btnText = 'Iniciar';
@@ -83,15 +81,16 @@ function transitionPomo(){
     msgCiclos.textContent = objMidSection.tareaActiva;
     minuto.textContent = objMidSection.pomodoroTime;
     segundo.textContent = '00';
+    console.log('POMO')
 }
 function transitionBreak(){
     clearInterval(temporizador);
     styleDocument.setProperty('--color', 'rgb(56, 133, 138)');
     styleDocument.setProperty('--color-select', 'rgb(65, 123, 128)');
     styleDocument.setProperty('--soft-color', 'rgb(76, 145, 150)');
+    ciclosSelect[1].classList.add('ciclos-select');
     ciclosSelect[0].classList.remove('ciclos-select');
     ciclosSelect[2].classList.remove('ciclos-select');
-    ciclosSelect[1].classList.add('ciclos-select');
     btnComenzar.classList.remove('btnPresionado');
 
     objMidSection.btnText = 'Iniciar';
@@ -99,15 +98,16 @@ function transitionBreak(){
     msgCiclos.textContent = objMidSection.descansoActivo;
     minuto.textContent = objMidSection.breakTime;
     segundo.textContent = '00';
+    console.log('BREAK')
 }
 function transitionLong(){
     clearInterval(temporizador);
     styleDocument.setProperty('--color', 'rgb(57, 112, 151)');
     styleDocument.setProperty('--color-select', 'rgb(66, 108, 138)');
     styleDocument.setProperty('--soft-color', 'rgb(77 127 162)');
+    ciclosSelect[2].classList.add('ciclos-select');
     ciclosSelect[0].classList.remove('ciclos-select');
     ciclosSelect[1].classList.remove('ciclos-select');
-    ciclosSelect[2].classList.add('ciclos-select');
     btnComenzar.classList.remove('btnPresionado');
 
     objMidSection.btnText = 'Iniciar';
@@ -115,19 +115,20 @@ function transitionLong(){
     msgCiclos.textContent = objMidSection.descansoActivo;
     minuto.textContent = objMidSection.longTime;
     segundo.textContent = '00';
+    console.log('LONG')
 }
 
 ciclosSelect.forEach((btn)=>{
     btn.addEventListener('click', (e)=>{
         switch(e.target.id) {
             case 'pomo':
-                    transitionPomo()
+                    transitionPomo();
                 break;
             case 'break':
-                    transitionBreak()
+                    transitionBreak();
                 break;
             case 'long':
-                    transitionLong()
+                    transitionLong();
                 break;
         }
     })
@@ -220,3 +221,24 @@ btnSkip.addEventListener('click', ()=>{
         transitionPomo();
     }
 })
+
+if(screen.width <= 500) {
+    document.getElementById('pomo').textContent = 'Pomo'
+    document.getElementById('break').textContent = 'Corto'
+    document.getElementById('long').textContent = 'Largo'
+} else {
+    document.getElementById('pomo').textContent = 'Pomodoro'
+    document.getElementById('break').textContent = 'Descanso Corto'
+    document.getElementById('long').textContent = ' Descanso Largo' 
+}
+window.onresize = ()=>{
+    if(screen.width <= 425) {
+        document.getElementById('pomo').textContent = 'Pomo'
+        document.getElementById('break').textContent = 'Corto'
+        document.getElementById('long').textContent = 'Largo'
+    } else {
+        document.getElementById('pomo').textContent = 'Pomodoro'
+        document.getElementById('break').textContent = 'Descanso Corto'
+        document.getElementById('long').textContent = ' Descanso Largo' 
+    }
+}

@@ -157,6 +157,9 @@ a:active {
     content: '#';
     color: var(--white-grey);
 }
+.ciclos-select-mobile {
+    display: none;
+}
 
 
 /* Section bottom */
@@ -171,7 +174,7 @@ a:active {
     padding-bottom: 12px;
     border-bottom: 2px solid var(--white-grey);
 }
-.section-bottom div img {
+.section-bottom__more-options-img {
     width: 28px;
     padding: 4px;
     border-radius: 4px;
@@ -285,26 +288,196 @@ a:active {
 
 /* Section bottom Cards */
 
-.card-container__card-agregar {
+.card-container__agregar-card {
+    width: 100%;
+    position: relative;
+}
+
+.card {
     width: 100%;
     height: 64px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+    padding: 0px 12px 0px 12px;
     margin-top: 12px;
-    border-radius: 8px;
+    border-left: 6px solid black; 
+
+    position: relative;
 
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--white);
+}
+
+.card-container__card--agregar {
     justify-content: center;
     align-items: center;
-
-    cursor: pointer;
+    border-radius: 6px;
+    margin-top: 12px;
     border: 2px dashed var(--soft-grey);
     background-color: var(--soft-color);
+    cursor: pointer;
 }
-.card-container__card-agregar:hover {
-    border-color: var(--white-grey);
+.card-container__card--agregar img {
+    width: 24px;
+    margin-right: 4px;
 }
-.card-container__card-agregar p {
+.card-container__card--agregar p {
     font-weight: 500;
     color: var(--white-grey);
+}
+.card-container__card--agregar:hover {
+    border-color: var(--white-grey);
+}
+
+.card__left,
+.card__right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.card__left p {
+    position: relative;
+    color: var(--dark-grey);
+    font-size: 1.7rem;
+    font-weight: 500;
+}
+.card__left span {
+    position: absolute;
+    content: '';
+    top: 9px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--soft-grey);
+    opacity: 0;
+}
+.card__right div {
+    display: flex;
+}
+.card__right p {
+    color: var(--soft-grey);
+}
+.card__right img {
+    padding: 4px;
+    width: 28px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid var(--soft-grey);
+}
+.card__right img:hover {
+    background-color: var(--white-grey);
+}
+
+.card__check {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    border: 2px solid var(--soft-grey-2);
+    background-color: var(--soft-grey-2);
+    border-radius: 50%;
+    cursor: pointer;
+}
+.card__check:hover {
+    border: 2px solid var(--white-grey);
+    background-color: var(--white-grey);
+}
+.card__check::after {
+    content: "";
+    display: block;
+    margin-left: 7px;
+    margin-top: 3px;
+    width: 6px;
+    height: 11px;
+    border-style: solid;
+    border-color: var(--white);
+    border-image: initial;
+    border-width: 0px 3px 3px 0px;
+    transform: rotate(45deg);
+}
+
+/* Agregar Card */
+.agregar-card {
+    position: absolute;
+    top: -2px;
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 40px;
+    transform: scale(0);
+    transform-origin: top;
+    transition: all 0.2s;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    background-color: var(--white);
+    z-index: 0;
+}
+.agregar-card__pomo-container {
+    padding: 0px 20px 20px 20px;
+}
+
+.agregar-card__name-tarea-container {
+    width: 100%;
+    padding: 20px;
+}
+.agregar-card__name-tarea {
+    width: 100%;
+    height: 40px;
+    padding: 0px 4px 0px 4px;
+    outline: none;
+
+    font-size: 2.4rem;
+    font-weight: 500;
+    color: var(--dark-grey);
+}
+.agregar-card__name-tarea::placeholder {
+    color: var(--soft-grey-2);
+}
+.agregar-card__label {
+    color: var(--dark-grey-2);
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+.agregar-card__input {
+    width: 84px;
+    height: 32px;
+    border-radius: 4px;
+    padding-left: 8px;
+
+    font-weight: bold;
+    color: var(--dark-grey-2);
+    background-color: var(--white-grey);
+}
+.agregar-card__btn-container {
+    width: 100%;
+    display: flex;
+    padding: 10px 20px 10px 20px;
+
+    background-color: var(--white-grey);
+    justify-content: flex-end;
+}
+.agregar-card button {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+.agregar-card__btn-cancelar {
+    cursor: pointer;
+    color: var(--soft-grey);
+}
+.agregar-card__btn-guardar {
+    padding: 8px;
+    border-radius: 4px;
+    margin-left: 20px;
+
+    cursor: pointer;
+    background-color: var(--dark-grey-2);
+    color: white;
+}.agregar-card__btn-guardar:hover {
+    background-color: var(--black);
 }
 
 
