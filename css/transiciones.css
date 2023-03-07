@@ -1,6 +1,10 @@
 *{
     transition: all 0.1s;
 }
+
+.reduceOpacity {
+    opacity: 0.2;
+}
 .ciclos-select{
     background-color: var(--color-select);
 }

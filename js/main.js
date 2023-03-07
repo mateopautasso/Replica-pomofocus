@@ -1,3 +1,6 @@
+const sectionTop = document.querySelector('.section-top');
+const sectionMid = document.querySelector('.section-mid');
+const sectionBottom = document.querySelector('.section-bottom');
 const cantidadCiclos = document.querySelector('.section-mid__nrCiclos');
 const msgCiclos = document.querySelector('.section-mid__msgCiclos');
 const ciclosSelect = document.querySelectorAll('.section-mid__ciclos button');
@@ -45,6 +48,9 @@ msgCiclos.textContent = objMidSection.tareaActiva;
 btnMenu.addEventListener('click', (e)=>{
     e.preventDefault()
     menuAjustes.classList.add('menu-settings-active');
+    sectionTop.classList.add('reduceOpacity');
+    sectionMid.classList.add('reduceOpacity');
+    sectionBottom.classList.add('reduceOpacity');
 })
 
 btnGuardarSettings.addEventListener('click', ()=>{
@@ -64,6 +70,9 @@ btnGuardarSettings.addEventListener('click', ()=>{
     }
 
     menuAjustes.classList.remove('menu-settings-active');
+    sectionTop.classList.remove('reduceOpacity');
+    sectionMid.classList.remove('reduceOpacity');
+    sectionBottom.classList.remove('reduceOpacity');
 })
 
 function transitionPomo(){

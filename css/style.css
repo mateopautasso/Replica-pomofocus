@@ -526,4 +526,13 @@ a:active {
     .section-mid__btn img {
         left: 185px;
     }
+    .agregar-card__name-tarea {
+        font-size: 2.2rem;
+    }
+    .menu-ajustes {
+        width: 320px;
+    }
+    .menu-ajustes__inputs-container div:nth-child(1) label {
+        margin-bottom: 20px;
+    }
 }
