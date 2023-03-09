@@ -45,36 +45,6 @@ minuto.textContent = objMidSection.pomodoroTime;
 cantidadCiclos.textContent = objMidSection.cantidadCiclos;
 msgCiclos.textContent = objMidSection.tareaActiva;
 
-btnMenu.addEventListener('click', (e)=>{
-    e.preventDefault()
-    menuAjustes.classList.add('menu-settings-active');
-    sectionTop.classList.add('reduceOpacity');
-    sectionMid.classList.add('reduceOpacity');
-    sectionBottom.classList.add('reduceOpacity');
-})
-
-btnGuardarSettings.addEventListener('click', ()=>{
-    objMidSection.pomodoroTime = ('0'+parseInt(pomoTime.value)).slice(-2);
-    objMidSection.breakTime = ('0'+parseInt(breakTime.value)).slice(-2);
-    objMidSection.longTime = ('0'+parseInt(longTime.value)).slice(-2);
-    objSettings.autoStartBreaks = autoBreak.checked;
-    objSettings.autoStartPomodoros = autoPomo.checked;
-    objSettings.longBreakInterval = parseInt(intervalosLong.value);
-
-    if (ciclosSelect[0].className === 'ciclos-select') {
-        minuto.textContent = objMidSection.pomodoroTime;
-    } else if (ciclosSelect[1].className === 'ciclos-select'){
-        minuto.textContent = objMidSection.breakTime;
-    } else {
-        minuto.textContent = objMidSection.longTime;
-    }
-
-    menuAjustes.classList.remove('menu-settings-active');
-    sectionTop.classList.remove('reduceOpacity');
-    sectionMid.classList.remove('reduceOpacity');
-    sectionBottom.classList.remove('reduceOpacity');
-})
-
 function transitionPomo(){
     clearInterval(temporizador);
     styleDocument.setProperty('--color', 'rgb(186, 73, 73)');
@@ -90,7 +60,6 @@ function transitionPomo(){
     msgCiclos.textContent = objMidSection.tareaActiva;
     minuto.textContent = objMidSection.pomodoroTime;
     segundo.textContent = '00';
-    console.log('POMO')
 }
 function transitionBreak(){
     clearInterval(temporizador);
@@ -107,7 +76,6 @@ function transitionBreak(){
     msgCiclos.textContent = objMidSection.descansoActivo;
     minuto.textContent = objMidSection.breakTime;
     segundo.textContent = '00';
-    console.log('BREAK')
 }
 function transitionLong(){
     clearInterval(temporizador);
@@ -124,26 +92,8 @@ function transitionLong(){
     msgCiclos.textContent = objMidSection.descansoActivo;
     minuto.textContent = objMidSection.longTime;
     segundo.textContent = '00';
-    console.log('LONG')
 }
-
-ciclosSelect.forEach((btn)=>{
-    btn.addEventListener('click', (e)=>{
-        switch(e.target.id) {
-            case 'pomo':
-                    transitionPomo();
-                break;
-            case 'break':
-                    transitionBreak();
-                break;
-            case 'long':
-                    transitionLong();
-                break;
-        }
-    })
-})
-
-btnComenzar.addEventListener('click', ()=>{
+function comenzarTemporizador() {
     btnComenzar.classList.toggle('btnPresionado');
     
     if(objMidSection.btnText === 'Iniciar') {
@@ -205,9 +155,8 @@ btnComenzar.addEventListener('click', ()=>{
         btnSkip.style.display = 'none';
         clearInterval(temporizador)
     }
-})
-
-btnSkip.addEventListener('click', ()=>{
+}
+function skipearTemporizador() {
     clearInterval(temporizador);
     btnSkip.style.display = 'none';
     console.log(objSettings.longBreakInterval);
@@ -229,7 +178,56 @@ btnSkip.addEventListener('click', ()=>{
     } else if (ciclosSelect[2].className === 'ciclos-select'){
         transitionPomo();
     }
+}
+function guardarSettings() {
+    objMidSection.pomodoroTime = ('0'+parseInt(pomoTime.value)).slice(-2);
+    objMidSection.breakTime = ('0'+parseInt(breakTime.value)).slice(-2);
+    objMidSection.longTime = ('0'+parseInt(longTime.value)).slice(-2);
+    objSettings.autoStartBreaks = autoBreak.checked;
+    objSettings.autoStartPomodoros = autoPomo.checked;
+    objSettings.longBreakInterval = parseInt(intervalosLong.value);
+
+    if (ciclosSelect[0].className === 'ciclos-select') {
+        minuto.textContent = objMidSection.pomodoroTime;
+    } else if (ciclosSelect[1].className === 'ciclos-select'){
+        minuto.textContent = objMidSection.breakTime;
+    } else {
+        minuto.textContent = objMidSection.longTime;
+    }
+
+    menuAjustes.classList.remove('menu-settings-active');
+    sectionTop.classList.remove('reduceOpacity');
+    sectionMid.classList.remove('reduceOpacity');
+    sectionBottom.classList.remove('reduceOpacity');
+}
+function abrirMenu(e) {
+    e.preventDefault()
+    menuAjustes.classList.add('menu-settings-active');
+    sectionTop.classList.add('reduceOpacity');
+    sectionMid.classList.add('reduceOpacity');
+    sectionBottom.classList.add('reduceOpacity');
+}
+
+ciclosSelect.forEach((btn)=>{
+    btn.addEventListener('click', (e)=>{
+        switch(e.target.id) {
+            case 'pomo':
+                    transitionPomo();
+                break;
+            case 'break':
+                    transitionBreak();
+                break;
+            case 'long':
+                    transitionLong();
+                break;
+        }
+    })
 })
+
+btnComenzar.addEventListener('click', comenzarTemporizador);
+btnMenu.addEventListener('click', abrirMenu)
+btnGuardarSettings.addEventListener('click', guardarSettings);
+btnSkip.addEventListener('click', skipearTemporizador);
 
 if(screen.width <= 500) {
     document.getElementById('pomo').textContent = 'Pomo'

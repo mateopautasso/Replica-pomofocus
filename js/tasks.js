@@ -44,40 +44,61 @@ btnTareaMenuCancelar.addEventListener('click', ()=>{
 listaTareas = [];
 
 class NewCard {
-    constructor(name, pomos) {
+    constructor(name, pomos, position) {
         this.name = name;
         this.pomos = pomos;
+        this.position = position;
         this.checked = false;
         this.body = `
         <div class="card__container">
             <div class="card__left">
-                <div class="card__check"></div>
-                <p class="card__title-tarea">${name}<span></span></p>
+                <div class="${position} card__check"></div>
+                <p class="card__title-tarea">${name}<span class="card__line-check"></span></p>
             </div>
             <div class="card__right">
                 <div>
-                    <p>0<span>/</span></p><p>${pomos}</p>
+                    <p class="pomos-completados">0</p><p class="pomos-establecidos">${pomos}</p>
                 </div>
                 <img src="./assets/icons8-more-48-grey.png" alt="">
             </div>
         </div>`
     }
     checkTarea() {
-        this.checked = true;
+        if(this.checked === false) {
+            this.checked = true;
+        } else {
+            this.checked = false;
+        }
+
     }
 }
+
+
+let funcionCheck;
+let btnCheck;
+let lineCheck;
 
 function guardarNuevaTarea() {
     let nameTarea = document.querySelector('.agregar-card__name-tarea').value;
     let pomosTarea = document.querySelector('.agregar-card__input').value;
+    let position = listaTareas.length + 1;
 
-    let newTarea = new NewCard(nameTarea, pomosTarea);
-    listaTareas.unshift(newTarea);
-    cardTareasContainer.innerHTML += listaTareas[0].body
+    let newTarea = new NewCard(nameTarea, pomosTarea, position);
+    listaTareas.push(newTarea);
+    cardTareasContainer.innerHTML += listaTareas[listaTareas.length - 1].body;
+    objMidSection.tareaActiva = listaTareas[0].name;
+    msgCiclos.textContent = objMidSection.tareaActiva;  
 
     agregarTareaMenu.classList.remove('agregar-tarea-active');
+    btnCheck = document.querySelectorAll('.card__check');
+    lineCheck = document.querySelectorAll('.card__line-check');
+    funcionCheck = btnCheck.forEach(btn => {
+        btn.addEventListener('click', (e)=>{
+            e.target.classList.toggle('btn-tarea-checked');
+            lineCheck[parseInt(e.target.className[0]) - 1].classList.toggle('tarea-checked')
+            newTarea.checkTarea();
+        })
+    });
+
 }
-btnTareaMenuGuardar.addEventListener('click', guardarNuevaTarea)
-
-
-
+btnTareaMenuGuardar.addEventListener('click', guardarNuevaTarea);

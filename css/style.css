@@ -400,6 +400,9 @@ a:active {
     border-width: 0px 3px 3px 0px;
     transform: rotate(45deg);
 }
+.pomos-completados::after {
+    content: '/';
+}
 
 /* Agregar Card */
 .agregar-card {
