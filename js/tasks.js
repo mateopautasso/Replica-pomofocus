@@ -41,16 +41,14 @@ btnTareaMenuCancelar.addEventListener('click', ()=>{
 
 // Nuevas Cards
 
-listaTareas = [];
-
 class NewCard {
     constructor(name, pomos, position) {
         this.name = name;
         this.pomos = pomos;
+        this.pomosRestantes = pomos;
         this.position = position;
         this.checked = false;
-        this.body = `
-        <div class="card__container">
+        this.body = `<div class="card__container">
             <div class="card__left">
                 <div class="${position} card__check"></div>
                 <p class="card__title-tarea">${name}<span class="card__line-check"></span></p>
@@ -61,7 +59,7 @@ class NewCard {
                 </div>
                 <img src="./assets/icons8-more-48-grey.png" alt="">
             </div>
-        </div>`
+</div>`
     }
     checkTarea() {
         if(this.checked === false) {
@@ -69,11 +67,11 @@ class NewCard {
         } else {
             this.checked = false;
         }
-
     }
 }
 
-
+let listaTareas = [];
+let ciclosConTarea = 0
 let funcionCheck;
 let btnCheck;
 let lineCheck;
@@ -101,4 +99,20 @@ function guardarNuevaTarea() {
     });
 
 }
+
+function sumarPomosEnTarea() {
+    let tareaActiva = listaTareas.find((tarea)=>{
+        return tarea.pomosRestantes != '0';
+    })
+    let pomosCompletos = document.querySelectorAll('.pomos-completados')
+
+    if(tareaActiva != undefined) {
+        pomosCompletos[ciclosConTarea].textContent = parseInt(pomosCompletos[ciclosConTarea].textContent) + 1
+        tareaActiva.pomosRestantes = tareaActiva.pomosRestantes - 1;
+        if(tareaActiva.pomosRestantes == 0) {
+            ciclosConTarea = ciclosConTarea + 1
+        }
+    }
+}
+
 btnTareaMenuGuardar.addEventListener('click', guardarNuevaTarea);

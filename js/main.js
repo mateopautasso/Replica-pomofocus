@@ -28,9 +28,9 @@ const objSettings = {
     longBreakInterval: 4
 }
 const objMidSection = {
-    pomodoroTime: ('0'+25).slice(-2),
-    breakTime: ('0'+5).slice(-2),
-    longTime: ('0'+15).slice(-2),
+    pomodoroTime: ('0'+1).slice(-2),
+    breakTime: ('0'+1).slice(-2),
+    longTime: ('0'+1).slice(-2),
     btnText: 'Iniciar',
     cantidadCiclos: 0,
     tareaActiva: '¡Tiempo para enfocarse!',
@@ -128,6 +128,8 @@ function comenzarTemporizador() {
 
             if(ciclosSelect[0].className === 'ciclos-select') {
                 objSettings.longBreakInterval = objSettings.longBreakInterval - 1;
+                sumarPomosEnTarea();
+                
                 if(objSettings.longBreakInterval == 0) {
                     transitionLong();
                     objSettings.longBreakInterval = objSettings.longBreakInterval + intervalosLong.value;
@@ -146,7 +148,6 @@ function comenzarTemporizador() {
             } else if(ciclosSelect[2].className === 'ciclos-select' && objSettings.autoStartBreaks === true) {
                 btnComenzar.click();
             }
-
         }, (minutosDelCicloAms + segundosDelCicloAms) - 60000)
 
     } else if(objMidSection.btnText === 'Pausa') {

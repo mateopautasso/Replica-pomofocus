@@ -354,7 +354,7 @@ a:active {
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: var(--soft-grey);
+    background-color: var(--dark-grey);
     opacity: 0;
 }
 .card__right div {
