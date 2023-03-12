@@ -84,7 +84,11 @@ function guardarNuevaTarea() {
     let newTarea = new NewCard(nameTarea, pomosTarea, position);
     listaTareas.push(newTarea);
     cardTareasContainer.innerHTML += listaTareas[listaTareas.length - 1].body;
-    objMidSection.tareaActiva = listaTareas[0].name;
+
+    let tareaEnCola = listaTareas.find((tarea)=>{
+        return tarea.pomosRestantes != '0';
+    })
+    objMidSection.tareaActiva = tareaEnCola.name;
     msgCiclos.textContent = objMidSection.tareaActiva;  
 
     agregarTareaMenu.classList.remove('agregar-tarea-active');

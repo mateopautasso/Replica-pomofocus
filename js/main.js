@@ -60,6 +60,14 @@ function transitionPomo(){
     msgCiclos.textContent = objMidSection.tareaActiva;
     minuto.textContent = objMidSection.pomodoroTime;
     segundo.textContent = '00';
+
+    if(listaTareas.length !== 0) {
+        let tareaEnCola = listaTareas.find((tarea)=>{
+            return tarea.pomosRestantes != '0';
+        })
+        objMidSection.tareaActiva = tareaEnCola.name;
+        msgCiclos.textContent = objMidSection.tareaActiva;  
+    }
 }
 function transitionBreak(){
     clearInterval(temporizador);
@@ -129,7 +137,7 @@ function comenzarTemporizador() {
             if(ciclosSelect[0].className === 'ciclos-select') {
                 objSettings.longBreakInterval = objSettings.longBreakInterval - 1;
                 sumarPomosEnTarea();
-                
+
                 if(objSettings.longBreakInterval == 0) {
                     transitionLong();
                     objSettings.longBreakInterval = objSettings.longBreakInterval + intervalosLong.value;
@@ -137,6 +145,13 @@ function comenzarTemporizador() {
                     transitionBreak();
                 }
             } else if(ciclosSelect[1].className === 'ciclos-select' || ciclosSelect[2].className === 'ciclos-select'){
+                if(listaTareas.length !== 0) {
+                    let tareaEnCola = listaTareas.find((tarea)=>{
+                        return tarea.pomosRestantes != '0';
+                    })
+                    objMidSection.tareaActiva = tareaEnCola.name;
+                    msgCiclos.textContent = objMidSection.tareaActiva;  
+                }
                 transitionPomo();
             }
 
