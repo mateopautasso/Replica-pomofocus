@@ -20,6 +20,10 @@ const autoBreak = document.getElementById('auto-break');
 const autoPomo = document.getElementById('auto-pomo');
 const intervalosLong = document.getElementById('long-break-interval');
 const btnGuardarSettings = document.getElementById('btn-save-settings');
+const btnTaskOptions = document.querySelector('.section-bottom__task-options-img')
+const menuTaskOptions = document.querySelector('.task-options-menu')
+const btnRemoveTareas = document.querySelector('.quitar-tareas-terminadas')
+const btnRemoveAllTareas = document.querySelector('.quitar-tareas')
 
 
 const objSettings = {
@@ -69,6 +73,7 @@ function transitionPomo(){
         msgCiclos.textContent = objMidSection.tareaActiva;  
     }
 }
+
 function transitionBreak(){
     clearInterval(temporizador);
     styleDocument.setProperty('--color', 'rgb(56, 133, 138)');
@@ -218,10 +223,60 @@ function guardarSettings() {
 }
 function abrirMenu(e) {
     e.preventDefault()
-    menuAjustes.classList.add('menu-settings-active');
-    sectionTop.classList.add('reduceOpacity');
-    sectionMid.classList.add('reduceOpacity');
-    sectionBottom.classList.add('reduceOpacity');
+    menuAjustes.classList.toggle('menu-settings-active');
+    sectionTop.classList.toggle('reduceOpacity');
+    sectionMid.classList.toggle('reduceOpacity');
+    sectionBottom.classList.toggle('reduceOpacity');
+}
+function abrirTaskOptions() {
+    menuTaskOptions.classList.toggle('menu-settings-active')
+}
+function quitarAllTareas() {
+    if(listaTareas.length > 0) {
+        listaTareas.splice(0, listaTareas.length);
+    }
+    cardTareasContainer.innerHTML = ''
+    menuTaskOptions.classList.toggle('menu-settings-active')
+}
+function quitarTareasTerminadas() {
+    let tareasNoTerminadas = [];
+    if(listaTareas.length > 0) {
+        tareasNoTerminadas = listaTareas.filter((tarea)=>{
+            return tarea.pomosRestantes !== 0
+        })
+    }
+    cardTareasContainer.innerHTML = ''
+
+    for(i=0; i < tareasNoTerminadas.length; i++) {
+        let nodo = document.createElement('div');
+        nodo.classList.add('card__container')
+        nodo.innerHTML = tareasNoTerminadas[i].body;
+        let pomosCompletos = tareasNoTerminadas[i].pomos - tareasNoTerminadas[i].pomosRestantes;
+        nodo.lastElementChild.firstElementChild.firstElementChild.textContent = pomosCompletos;
+
+        if(tareasNoTerminadas[i].checked === true) {
+            nodo.firstElementChild.firstElementChild.classList.add('btn-tarea-checked')
+            nodo.firstElementChild.lastElementChild.firstElementChild.classList.add('tarea-checked')
+        }
+
+        cardTareasContainer.appendChild(nodo)   
+    }
+    for(i=0; i < listaTareas.length; i++) {
+        if(listaTareas[i].pomosRestantes == 0) {
+            listaTareas.splice([i],1);
+        }
+    }
+    btnCheck = document.querySelectorAll('.card__check');
+    lineCheck = document.querySelectorAll('.card__line-check');
+    funcionCheck = btnCheck.forEach(btn => {
+        btn.addEventListener('click', (e)=>{
+            e.target.classList.toggle('btn-tarea-checked');
+            lineCheck[parseInt(e.target.className[0]) - 1].classList.toggle('tarea-checked');
+            let positionDeCard = parseInt(e.target.parentElement.firstElementChild.className[0]);
+            listaTareas[positionDeCard - 1].checkTarea();
+        })
+    });
+    menuTaskOptions.classList.toggle('menu-settings-active')
 }
 
 ciclosSelect.forEach((btn)=>{
@@ -240,10 +295,13 @@ ciclosSelect.forEach((btn)=>{
     })
 })
 
-btnComenzar.addEventListener('click', comenzarTemporizador);
-btnMenu.addEventListener('click', abrirMenu)
 btnGuardarSettings.addEventListener('click', guardarSettings);
+btnComenzar.addEventListener('click', comenzarTemporizador);
 btnSkip.addEventListener('click', skipearTemporizador);
+btnMenu.addEventListener('click', abrirMenu);
+btnTaskOptions.addEventListener('click', abrirTaskOptions);
+btnRemoveAllTareas.addEventListener('click', quitarAllTareas)
+btnRemoveTareas.addEventListener('click', quitarTareasTerminadas)
 
 if(screen.width <= 500) {
     document.getElementById('pomo').textContent = 'Pomo'

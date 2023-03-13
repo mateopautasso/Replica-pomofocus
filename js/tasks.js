@@ -48,8 +48,7 @@ class NewCard {
         this.pomosRestantes = pomos;
         this.position = position;
         this.checked = false;
-        this.body = `<div class="card__container">
-            <div class="card__left">
+        this.body = `<div class="card__left">
                 <div class="${position} card__check"></div>
                 <p class="card__title-tarea">${name}<span class="card__line-check"></span></p>
             </div>
@@ -58,8 +57,7 @@ class NewCard {
                     <p class="pomos-completados">0</p><p class="pomos-establecidos">${pomos}</p>
                 </div>
                 <img src="./assets/icons8-more-48-grey.png" alt="">
-            </div>
-</div>`
+            </div>`
     }
     checkTarea() {
         if(this.checked === false) {
@@ -83,7 +81,11 @@ function guardarNuevaTarea() {
 
     let newTarea = new NewCard(nameTarea, pomosTarea, position);
     listaTareas.push(newTarea);
-    cardTareasContainer.innerHTML += listaTareas[listaTareas.length - 1].body;
+    
+    let nodo = document.createElement('div');
+    nodo.classList.add('card__container');
+    nodo.innerHTML = listaTareas[listaTareas.length - 1].body;
+    cardTareasContainer.appendChild(nodo);
 
     let tareaEnCola = listaTareas.find((tarea)=>{
         return tarea.pomosRestantes != '0';
@@ -101,7 +103,6 @@ function guardarNuevaTarea() {
             newTarea.checkTarea();
         })
     });
-
 }
 
 function sumarPomosEnTarea() {
