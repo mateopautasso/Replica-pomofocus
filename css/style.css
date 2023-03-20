@@ -463,10 +463,11 @@ a:active {
 .card__options--right {
     display: flex;
     align-items: center;
+    gap: 8px;
 }
 .agregar-card__btn-cancelar--card-options, 
-.agregar-card__btn-guardar--card-options {
-    height: 40px;
+.agregar-card__btn-guardar--card-options,
+.agregar-card__btn-eliminar--card-options {
     font-size: 1.4rem;
 }
 .card__edit-pomos {
@@ -550,24 +551,26 @@ a:active {
 
     background-color: var(--white-grey);
     justify-content: flex-end;
+    gap: 16px;
 }
 .agregar-card button {
     font-size: 1.5rem;
     font-weight: 500;
 }
-.agregar-card__btn-cancelar {
+.agregar-card__btn-cancelar,
+.agregar-card__btn-eliminar {
     cursor: pointer;
     color: var(--soft-grey);
 }
 .agregar-card__btn-guardar {
     padding: 8px;
     border-radius: 4px;
-    margin-left: 20px;
 
     cursor: pointer;
     background-color: var(--dark-grey-2);
     color: white;
-}.agregar-card__btn-guardar:hover {
+}
+.agregar-card__btn-guardar:hover {
     background-color: var(--black);
 }
 
@@ -591,6 +594,16 @@ a:active {
     }
     .section-mid__btn img {
         left: 200px;
+    }
+}
+@media screen and (max-width: 1024px) {
+    .card__edit-pomos {
+        flex-direction: row;
+        gap: 8px;
+    }
+    .card__edit-pomos__btn {
+        width: 28px;
+        height: 28px;
     }
 }
 @media screen and (max-width: 400px) {
@@ -625,5 +638,24 @@ a:active {
     }
     .menu-ajustes__inputs-container div:nth-child(1) label {
         margin-bottom: 20px;
+    }
+    .agregar-card__btn-cancelar--card-options, 
+    .agregar-card__btn-guardar--card-options,
+    .agregar-card__btn-eliminar--card-options {
+    font-size: 1.3rem;
+    }
+    .card__edit-pomos {
+        margin-left: 8px;
+    }
+    .card__options--right {
+        gap: 6px;
+    }
+    .card__edit-pomos {
+        flex-direction: row;
+        gap: 4px;
+    }
+    .card__edit-pomos__btn {
+        width: 20px;
+        height: 20px;
     }
 }

@@ -62,16 +62,17 @@ class NewCard {
                             <p class="pomos-completados-styles">0</p><p class="pomos-establecidos">${pomos}</p>
                             <div class="card__edit-pomos">
                                 <button class="card__edit-pomos__btn card__btn-sumar">
-                                    <img class="card__btn-options" src="./assets/icons8-up-24.png" alt="">
+                                    <img id="sumar-pomo" src="./assets/icons8-up-24.png" alt="">
                                 </button>
                                 <button class="card__edit-pomos__btn card__btn-restar">
-                                    <img class="card__btn-options" src="./assets/icons8-down-24.png" alt="">
+                                    <img id="restar-pomo" src="./assets/icons8-down-24.png" alt="">
                                 </button>
                             </div>
                         </div>
                         <div class="card__options--right">
-                            <button class="agregar-card__btn-cancelar agregar-card__btn-cancelar--card-options">Cancelar</button>
-                            <button class="agregar-card__btn-guardar agregar-card__btn-guardar--card-options">Guardar</button>
+                            <button id="eliminar" class="agregar-card__btn-eliminar agregar-card__btn-eliminar--card-options">Eliminar</button>
+                            <button id="cancelar" class="agregar-card__btn-cancelar agregar-card__btn-cancelar--card-options">Cancelar</button>
+                            <button id="guardar" class="agregar-card__btn-guardar agregar-card__btn-guardar--card-options">Guardar</button>
                         </div>
                     </div>
                     <img class="card__btn-options" src="./assets/icons8-more-48-grey.png" alt="">
@@ -92,6 +93,63 @@ let funcionCheck;
 let cardOptions;
 let btnCheck;
 let lineCheck;
+let positionEnArray;
+let pomosDeCardModified;
+let pomosRestDeCardModified;
+
+let btnSumarPomo;
+let btnRestarPomo;
+let btnEliminar;
+let btnCancelar;
+let btnGuardar;
+
+function sumarPomosEnTarea() {
+    let tareaActiva = listaTareas.find((tarea)=>{
+        return tarea.pomosRestantes != 0;
+    })
+    let pomosCompletos = document.querySelectorAll('.pomos-completados');
+
+    if(tareaActiva != undefined) {
+        pomosCompletos[tareaActiva.position - 1].textContent = parseInt(pomosCompletos[tareaActiva.position - 1].textContent) + 1
+        tareaActiva.pomosRestantes = tareaActiva.pomosRestantes - 1;
+    }
+}
+
+function sumarPomo(e) {
+    pomosDeCardModified = parseInt(pomosDeCardModified) + 1;
+    pomosRestDeCardModified = parseInt(pomosRestDeCardModified) + 1;
+
+    e.target.parentElement.parentElement.parentElement.children[1].textContent = pomosDeCardModified;
+}
+function restarPomo(e) {
+    if(pomosDeCardModified > 1) {
+        pomosDeCardModified = parseInt(pomosDeCardModified) - 1;
+        pomosRestDeCardModified = parseInt(pomosRestDeCardModified) - 1;
+
+        e.target.parentElement.parentElement.parentElement.children[1].textContent = pomosDeCardModified;
+    }
+}
+
+function cancelar(e) {
+    e.target.parentElement.parentElement.classList.remove('menu-settings-active');
+}
+function guardar(e) {
+    e.target.parentElement.parentElement.classList.remove('menu-settings-active');
+    listaTareas[positionEnArray].pomos = pomosDeCardModified;
+    listaTareas[positionEnArray].pomosRestantes = pomosRestDeCardModified;
+    e.target.parentElement.parentElement.parentElement.parentElement.parentElement.lastElementChild.firstElementChild.lastElementChild.textContent = pomosDeCardModified;
+}
+function eliminar(e) {
+    let pos = parseInt(e.target.parentElement.parentElement.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.className[0])
+    let cardAEliminar = listaTareas.find((card)=>{
+        return card.position === pos;
+    })
+    let indexCard = listaTareas.indexOf(cardAEliminar);
+
+    listaTareas.splice(indexCard, 1);
+    let nodoAeliminar = e.target.parentElement.parentElement.parentElement.parentElement.parentElement
+    cardTareasContainer.removeChild(nodoAeliminar);
+}
 
 function guardarNuevaTarea() {
     let nameTarea = document.querySelector('.agregar-card__name-tarea').value;
@@ -124,72 +182,40 @@ function guardarNuevaTarea() {
         })
     });
 
-    btnCardOptions = document.querySelectorAll('.card__btn-options');
-
-    cardOptions = btnCardOptions.forEach((btn)=>{
+    const btnCardOptions = document.querySelectorAll('.card__btn-options');
+    btnCardOptions.forEach((btn)=>{
         btn.addEventListener('click', (e)=>{
             e.target.previousElementSibling.classList.add('menu-settings-active');
-            let positionEnArray = parseInt(e.target.parentElement.parentElement.previousElementSibling.firstElementChild.className[0]) - 1;
+            positionEnArray = parseInt(e.target.parentElement.parentElement.previousElementSibling.firstElementChild.className[0]) - 1;
             let pomosEstablecidos = listaTareas[positionEnArray].pomos;
             let pomosCompletos = listaTareas[positionEnArray].pomos - listaTareas[positionEnArray].pomosRestantes;
             e.target.previousElementSibling.firstElementChild.firstElementChild.textContent = pomosCompletos;
             e.target.previousElementSibling.firstElementChild.children[1].textContent = pomosEstablecidos;
 
-            let btnSumarPomo = e.target.previousElementSibling.firstElementChild.lastElementChild.firstElementChild;
-            let btnRestarPomo = e.target.previousElementSibling.firstElementChild.lastElementChild.lastElementChild;
-            let btnCancelar = e.target.previousElementSibling.lastElementChild.firstElementChild;
-            let btnGuardar = e.target.previousElementSibling.lastElementChild.lastElementChild;
-
-            let pomosDeCardModified = listaTareas[positionEnArray].pomos;
-            let pomosRestDeCardModified = listaTareas[positionEnArray].pomosRestantes;
-            console.log(pomosDeCardModified)
-
-            function sumarPomo() {
-                pomosDeCardModified = parseInt(pomosDeCardModified) + 1;
-                pomosRestDeCardModified = parseInt(pomosRestDeCardModified) + 1;
-
-                e.target.previousElementSibling.firstElementChild.children[1].textContent = pomosDeCardModified;
-            }
-            function restarPomo() {
-                if(pomosDeCardModified > 1) {
-                    pomosDeCardModified = parseInt(pomosDeCardModified) - 1;
-                    pomosRestDeCardModified = parseInt(pomosRestDeCardModified) - 1;
-    
-                    e.target.previousElementSibling.firstElementChild.children[1].textContent = pomosDeCardModified;
-                }
-            }
-            btnSumarPomo.addEventListener('click', sumarPomo);
-            btnRestarPomo.addEventListener('click', restarPomo);
-
-
-            btnCancelar.addEventListener('click', ()=>{
-                e.target.previousElementSibling.classList.remove('menu-settings-active');
-                btnSumarPomo.removeEventListener('click', sumarPomo);
-                btnRestarPomo.removeEventListener('click', restarPomo);
-            });
-            btnGuardar.addEventListener('click', ()=>{
-                e.target.previousElementSibling.classList.remove('menu-settings-active');
-                btnSumarPomo.removeEventListener('click', sumarPomo);
-                btnRestarPomo.removeEventListener('click', restarPomo);
-                listaTareas[positionEnArray].pomos = pomosDeCardModified;
-                listaTareas[positionEnArray].pomosRestantes = pomosRestDeCardModified;
-                e.target.parentElement.parentElement.firstElementChild.lastElementChild.textContent = pomosDeCardModified;
-            });
+            pomosDeCardModified = listaTareas[positionEnArray].pomos;
+            pomosRestDeCardModified = listaTareas[positionEnArray].pomosRestantes;
         })
-    }) 
-}
-
-function sumarPomosEnTarea() {
-    let tareaActiva = listaTareas.find((tarea)=>{
-        return tarea.pomosRestantes != 0;
     })
-    let pomosCompletos = document.querySelectorAll('.pomos-completados');
-    console.log(tareaActiva)
 
-    if(tareaActiva != undefined) {
-        pomosCompletos[tareaActiva.position - 1].textContent = parseInt(pomosCompletos[tareaActiva.position - 1].textContent) + 1
-        tareaActiva.pomosRestantes = tareaActiva.pomosRestantes - 1;
-    }
+    nodo.addEventListener('click', (e)=>{
+        switch(e.target.id) {
+            case 'sumar-pomo':
+                sumarPomo(e)
+                break;
+            case 'restar-pomo':
+                restarPomo(e)
+                break;
+            case 'cancelar':
+               cancelar(e);
+               break;
+            case 'guardar':
+               guardar(e);
+               break;
+            case 'eliminar':
+               eliminar(e);
+               break;
+        }
+    })
 }
 
 btnTareaMenuGuardar.addEventListener('click', guardarNuevaTarea);
