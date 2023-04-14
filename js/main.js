@@ -13,7 +13,7 @@ const styleDocument = document.documentElement.style;
 
 const audio = document.createElement("audio");
 audio.preload = "auto";
-audio.src = "../assets/alarma.mp3";
+audio.src = "./assets/alarma.mp3";
 document.body.appendChild(audio);
 
 // Ajustes
