@@ -11,6 +11,11 @@ const minuto = document.querySelector('.minuto');
 const segundo = document.querySelector('.segundo');
 const styleDocument = document.documentElement.style;
 
+const audio = document.createElement("audio");
+audio.preload = "auto";
+audio.src = "../assets/alarma.mp3";
+document.body.appendChild(audio);
+
 // Ajustes
 const menuAjustes = document.querySelector('.menu-ajustes');
 const pomoTime = document.getElementById('pomo-time-ajustes');
@@ -108,20 +113,23 @@ function transitionLong(){
 }
 function comenzarTemporizador() {
     btnComenzar.classList.toggle('btnPresionado');
-    
+
     if(objMidSection.btnText === 'Iniciar') {
         objMidSection.btnText = 'Pausa';
         btnComenzar.textContent = objMidSection.btnText;
         btnSkip.style.display = 'block';
 
         minutosDelCiclo = parseInt(minuto.textContent) 
-        segundosDelCiclo = minutosDelCiclo * 60 + parseInt(segundo.textContent);
+        segundosDelCiclo = parseInt(segundo.textContent);
         let minutosDelCicloAms = (minutosDelCiclo * 60) * 1000;
         let segundosDelCicloAms = segundosDelCiclo * 1000;
 
-        let segundos = 60;
+        console.log(minutosDelCicloAms);
+        console.log(segundosDelCicloAms)
+
+        let segundos = segundosDelCiclo;
         let minutos = minutosDelCiclo;
-        minutos = minutos - 1;
+        minutos = minutos;
         temporizador = setInterval(()=>{
             if(segundos > 0) {
                 segundos = segundos - 1;
@@ -168,8 +176,9 @@ function comenzarTemporizador() {
             } else if(ciclosSelect[2].className === 'ciclos-select' && objSettings.autoStartBreaks === true) {
                 btnComenzar.click();
             }
-        }, (minutosDelCicloAms + segundosDelCicloAms) - 60000)
+            audio.play();
 
+        }, (minutosDelCicloAms + segundosDelCicloAms))
     } else if(objMidSection.btnText === 'Pausa') {
         objMidSection.btnText = 'Iniciar';
         btnComenzar.textContent = objMidSection.btnText;
@@ -180,7 +189,6 @@ function comenzarTemporizador() {
 function skipearTemporizador() {
     clearInterval(temporizador);
     btnSkip.style.display = 'none';
-    console.log(objSettings.longBreakInterval);
     if (ciclosSelect[0].className === 'ciclos-select') {
         objMidSection.cantidadCiclos = objMidSection.cantidadCiclos + 1;
         cantidadCiclos.textContent = objMidSection.cantidadCiclos;
@@ -201,9 +209,12 @@ function skipearTemporizador() {
     }
 }
 function guardarSettings() {
+    clearInterval(temporizador);
+    transitionPomo();
     objMidSection.pomodoroTime = ('0'+parseInt(pomoTime.value)).slice(-2);
     objMidSection.breakTime = ('0'+parseInt(breakTime.value)).slice(-2);
     objMidSection.longTime = ('0'+parseInt(longTime.value)).slice(-2);
+    segundo.textContent = '00';
     objSettings.autoStartBreaks = autoBreak.checked;
     objSettings.autoStartPomodoros = autoPomo.checked;
     objSettings.longBreakInterval = parseInt(intervalosLong.value);

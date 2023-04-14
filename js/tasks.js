@@ -31,6 +31,13 @@ const btnTareaMenuCancelar = document.querySelector('.agregar-card__btn-cancelar
 const btnTareaMenuGuardar = document.querySelector('.agregar-card__btn-guardar')
 
 agregarTareaElemento.addEventListener('click', ()=>{
+    setTimeout(()=>{
+        window.scroll({
+            top: 1000,
+            left: 0,
+            behavior: "smooth",
+          });
+    },200)
     agregarTareaMenu.classList.add('agregar-tarea-active');
 })
 btnTareaMenuCancelar.addEventListener('click', ()=>{
