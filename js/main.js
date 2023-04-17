@@ -126,11 +126,6 @@ function comenzarTemporizador() {
 
         let segundos = segundosDelCiclo;
         let minutos = minutosDelCiclo;
-        // if(segundo.textContent == '00' && parseInt(minuto.textContent) > 1) {
-        //     minutos = minutos - 1;
-        //     console.log('asd')
-        // }
-        // console.log(segundosDelCiclo)
 
         temporizador = setInterval(()=>{
             if(segundos > 0) {
