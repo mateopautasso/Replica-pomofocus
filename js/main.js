@@ -25,6 +25,23 @@ const menuTaskOptions = document.querySelector('.task-options-menu');
 const btnRemoveTareas = document.querySelector('.quitar-tareas-terminadas');
 const btnRemoveAllTareas = document.querySelector('.quitar-tareas');
 
+// Nodo Audio
+const audio = new Audio();
+audio.preload = 'auto';
+audio.src = '../assets/alarma2.mp3';
+const audioFragment = document.createDocumentFragment();
+audioFragment.appendChild(audio);
+document.querySelector('main').appendChild(audioFragment);
+
+function alarma(){ 
+    const audioElement = document.querySelector('audio');
+    audioElement.play();
+    setTimeout(()=>{
+        audioElement.pause()
+    },4000)
+}
+
+
 
 const objSettings = {
     autoStartBreaks: false,
@@ -76,6 +93,8 @@ function transitionPomo(){
     }
 }
 function transitionBreak(){
+    clearInterval(temporizador);
+    clearTimeout(temporizadorTotal);
     styleDocument.setProperty('--color', 'rgb(56, 133, 138)');
     styleDocument.setProperty('--color-select', 'rgb(65, 123, 128)');
     styleDocument.setProperty('--soft-color', 'rgb(76, 145, 150)');
@@ -170,6 +189,8 @@ function comenzarTemporizador() {
             } else if(ciclosSelect[2].className === 'ciclos-select' && objSettings.autoStartBreaks === true) {
                 btnComenzar.click();
             }
+
+            alarma();
         }, (minutosDelCicloAms + segundosDelCicloAms))
 
     } else if(objMidSection.btnText === 'Pausa') {
