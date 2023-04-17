@@ -207,6 +207,8 @@ function skipearTemporizador() {
     }
 }
 function guardarSettings() {
+    clearInterval(temporizador);
+    clearTimeout(temporizadorTotal);
     objMidSection.pomodoroTime = ('0'+parseInt(pomoTime.value)).slice(-2);
     objMidSection.breakTime = ('0'+parseInt(breakTime.value)).slice(-2);
     objMidSection.longTime = ('0'+parseInt(longTime.value)).slice(-2);
@@ -221,6 +223,7 @@ function guardarSettings() {
     } else {
         minuto.textContent = objMidSection.longTime;
     }
+    transitionPomo();
 
     menuAjustes.classList.remove('menu-settings-active');
     sectionTop.classList.remove('reduceOpacity');
