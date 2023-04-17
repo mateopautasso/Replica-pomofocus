@@ -11,11 +11,6 @@ const minuto = document.querySelector('.minuto');
 const segundo = document.querySelector('.segundo');
 const styleDocument = document.documentElement.style;
 
-const audio = document.createElement("audio");
-audio.preload = "auto";
-audio.src = "https://mateopautasso.github.io/Replica-pomofocus/assets/alarma.mp3";
-document.body.appendChild(audio);
-
 // Ajustes
 const menuAjustes = document.querySelector('.menu-ajustes');
 const pomoTime = document.getElementById('pomo-time-ajustes');
@@ -49,6 +44,7 @@ const objMidSection = {
 let minutosDelCiclo; 
 let segundosDelCiclo;
 let temporizador;
+let temporizadorTotal;
 btnComenzar.textContent = objMidSection.btnText;
 minuto.textContent = objMidSection.pomodoroTime;
 cantidadCiclos.textContent = objMidSection.cantidadCiclos;
@@ -56,6 +52,7 @@ msgCiclos.textContent = objMidSection.tareaActiva;
 
 function transitionPomo(){
     clearInterval(temporizador);
+    clearTimeout(temporizadorTotal);
     styleDocument.setProperty('--color', 'rgb(186, 73, 73)');
     styleDocument.setProperty('--color-select', 'rgb(164, 78, 78)');
     styleDocument.setProperty('--soft-color', 'rgb(193, 92, 92)');
@@ -78,9 +75,9 @@ function transitionPomo(){
         msgCiclos.textContent = objMidSection.tareaActiva;  
     }
 }
-
 function transitionBreak(){
     clearInterval(temporizador);
+    clearTimeout(temporizadorTotal);
     styleDocument.setProperty('--color', 'rgb(56, 133, 138)');
     styleDocument.setProperty('--color-select', 'rgb(65, 123, 128)');
     styleDocument.setProperty('--soft-color', 'rgb(76, 145, 150)');
@@ -97,6 +94,7 @@ function transitionBreak(){
 }
 function transitionLong(){
     clearInterval(temporizador);
+    clearTimeout(temporizadorTotal);
     styleDocument.setProperty('--color', 'rgb(57, 112, 151)');
     styleDocument.setProperty('--color-select', 'rgb(66, 108, 138)');
     styleDocument.setProperty('--soft-color', 'rgb(77 127 162)');
@@ -111,9 +109,11 @@ function transitionLong(){
     minuto.textContent = objMidSection.longTime;
     segundo.textContent = '00';
 }
+
+
 function comenzarTemporizador() {
     btnComenzar.classList.toggle('btnPresionado');
-
+    
     if(objMidSection.btnText === 'Iniciar') {
         objMidSection.btnText = 'Pausa';
         btnComenzar.textContent = objMidSection.btnText;
@@ -124,12 +124,9 @@ function comenzarTemporizador() {
         let minutosDelCicloAms = (minutosDelCiclo * 60) * 1000;
         let segundosDelCicloAms = segundosDelCiclo * 1000;
 
-        console.log(minutosDelCicloAms);
-        console.log(segundosDelCicloAms)
-
         let segundos = segundosDelCiclo;
         let minutos = minutosDelCiclo;
-        minutos = minutos;
+
         temporizador = setInterval(()=>{
             if(segundos > 0) {
                 segundos = segundos - 1;
@@ -141,11 +138,8 @@ function comenzarTemporizador() {
             minuto.textContent = ('0'+minutos).slice(-2); 
         },1000)
 
-        setTimeout(()=>{
-            clearInterval(temporizador)
-
-            objMidSection.cantidadCiclos = objMidSection.cantidadCiclos + 1;
-            cantidadCiclos.textContent = objMidSection.cantidadCiclos;
+        temporizadorTotal = setTimeout(()=>{
+            clearInterval(temporizador);
 
             if(ciclosSelect[0].className === 'ciclos-select') {
                 objSettings.longBreakInterval = objSettings.longBreakInterval - 1;
@@ -165,6 +159,8 @@ function comenzarTemporizador() {
                     objMidSection.tareaActiva = tareaEnCola.name;
                     msgCiclos.textContent = objMidSection.tareaActiva;  
                 }
+                objMidSection.cantidadCiclos = objMidSection.cantidadCiclos + 1;
+                cantidadCiclos.textContent = objMidSection.cantidadCiclos;
                 transitionPomo();
             }
 
@@ -176,19 +172,21 @@ function comenzarTemporizador() {
             } else if(ciclosSelect[2].className === 'ciclos-select' && objSettings.autoStartBreaks === true) {
                 btnComenzar.click();
             }
-            audio.play();
-
         }, (minutosDelCicloAms + segundosDelCicloAms))
+
     } else if(objMidSection.btnText === 'Pausa') {
+        clearInterval(temporizador);
+        clearTimeout(temporizadorTotal);
         objMidSection.btnText = 'Iniciar';
         btnComenzar.textContent = objMidSection.btnText;
         btnSkip.style.display = 'none';
-        clearInterval(temporizador)
     }
 }
 function skipearTemporizador() {
     clearInterval(temporizador);
+    clearTimeout(temporizadorTotal);
     btnSkip.style.display = 'none';
+    console.log(objSettings.longBreakInterval);
     if (ciclosSelect[0].className === 'ciclos-select') {
         objMidSection.cantidadCiclos = objMidSection.cantidadCiclos + 1;
         cantidadCiclos.textContent = objMidSection.cantidadCiclos;
@@ -209,12 +207,9 @@ function skipearTemporizador() {
     }
 }
 function guardarSettings() {
-    clearInterval(temporizador);
-    transitionPomo();
     objMidSection.pomodoroTime = ('0'+parseInt(pomoTime.value)).slice(-2);
     objMidSection.breakTime = ('0'+parseInt(breakTime.value)).slice(-2);
     objMidSection.longTime = ('0'+parseInt(longTime.value)).slice(-2);
-    segundo.textContent = '00';
     objSettings.autoStartBreaks = autoBreak.checked;
     objSettings.autoStartPomodoros = autoPomo.checked;
     objSettings.longBreakInterval = parseInt(intervalosLong.value);
