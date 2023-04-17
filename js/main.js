@@ -28,7 +28,7 @@ const btnRemoveAllTareas = document.querySelector('.quitar-tareas');
 // Nodo Audio
 const audio = new Audio();
 audio.preload = 'auto';
-audio.src = '../assets/alarma2.mp3';
+audio.src = 'https://mateopautasso.github.io/assets/alarma2.mp3';
 const audioFragment = document.createDocumentFragment();
 audioFragment.appendChild(audio);
 document.querySelector('main').appendChild(audioFragment);
