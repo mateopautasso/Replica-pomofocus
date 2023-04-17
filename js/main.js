@@ -20,10 +20,10 @@ const autoBreak = document.getElementById('auto-break');
 const autoPomo = document.getElementById('auto-pomo');
 const intervalosLong = document.getElementById('long-break-interval');
 const btnGuardarSettings = document.getElementById('btn-save-settings');
-const btnTaskOptions = document.querySelector('.section-bottom__task-options-img')
-const menuTaskOptions = document.querySelector('.task-options-menu')
-const btnRemoveTareas = document.querySelector('.quitar-tareas-terminadas')
-const btnRemoveAllTareas = document.querySelector('.quitar-tareas')
+const btnTaskOptions = document.querySelector('.section-bottom__task-options-img');
+const menuTaskOptions = document.querySelector('.task-options-menu');
+const btnRemoveTareas = document.querySelector('.quitar-tareas-terminadas');
+const btnRemoveAllTareas = document.querySelector('.quitar-tareas');
 
 
 const objSettings = {
@@ -76,8 +76,6 @@ function transitionPomo(){
     }
 }
 function transitionBreak(){
-    clearInterval(temporizador);
-    clearTimeout(temporizadorTotal);
     styleDocument.setProperty('--color', 'rgb(56, 133, 138)');
     styleDocument.setProperty('--color-select', 'rgb(65, 123, 128)');
     styleDocument.setProperty('--soft-color', 'rgb(76, 145, 150)');
@@ -143,6 +141,8 @@ function comenzarTemporizador() {
 
             if(ciclosSelect[0].className === 'ciclos-select') {
                 objSettings.longBreakInterval = objSettings.longBreakInterval - 1;
+                objMidSection.cantidadCiclos = objMidSection.cantidadCiclos + 1;
+                cantidadCiclos.textContent = objMidSection.cantidadCiclos;
                 sumarPomosEnTarea();
 
                 if(objSettings.longBreakInterval == 0) {
@@ -159,8 +159,6 @@ function comenzarTemporizador() {
                     objMidSection.tareaActiva = tareaEnCola.name;
                     msgCiclos.textContent = objMidSection.tareaActiva;  
                 }
-                objMidSection.cantidadCiclos = objMidSection.cantidadCiclos + 1;
-                cantidadCiclos.textContent = objMidSection.cantidadCiclos;
                 transitionPomo();
             }
 
@@ -245,13 +243,13 @@ function quitarAllTareas() {
         listaTareas.splice(0, listaTareas.length);
     }
     cardTareasContainer.innerHTML = ''
-    menuTaskOptions.classList.toggle('menu-settings-active')
+    menuTaskOptions.classList.toggle('menu-settings-active');
 }
 function quitarTareasTerminadas() {
     let tareasNoTerminadas = [];
     if(listaTareas.length > 0) {
         tareasNoTerminadas = listaTareas.filter((tarea)=>{
-            return tarea.pomosRestantes !== 0
+            return tarea.pomosRestantes !== 0;
         })
     }
     cardTareasContainer.innerHTML = ''
@@ -264,8 +262,8 @@ function quitarTareasTerminadas() {
         nodo.lastElementChild.firstElementChild.firstElementChild.textContent = pomosCompletos;
 
         if(tareasNoTerminadas[i].checked === true) {
-            nodo.firstElementChild.firstElementChild.classList.add('btn-tarea-checked')
-            nodo.firstElementChild.lastElementChild.firstElementChild.classList.add('tarea-checked')
+            nodo.firstElementChild.firstElementChild.classList.add('btn-tarea-checked');
+            nodo.firstElementChild.lastElementChild.firstElementChild.classList.add('tarea-checked');
         }
 
         cardTareasContainer.appendChild(nodo)   
