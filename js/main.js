@@ -33,14 +33,14 @@ const audioFragment = document.createDocumentFragment();
 audioFragment.appendChild(audio);
 document.querySelector('main').appendChild(audioFragment);
 
-const audioElement = document.querySelector('audio');
 function alarma(){ 
+    const audioElement = document.querySelector('audio');
     audioElement.play();
     setTimeout(()=>{
         audioElement.pause()
     },4000)
 }
-audioElement.addEventListener('click', alarma);
+
 
 
 const objSettings = {
@@ -190,7 +190,7 @@ function comenzarTemporizador() {
                 btnComenzar.click();
             }
 
-            audioElement.click();
+            alarma();
         }, (minutosDelCicloAms + segundosDelCicloAms))
 
     } else if(objMidSection.btnText === 'Pausa') {
