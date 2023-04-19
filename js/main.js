@@ -11,7 +11,7 @@ const minuto = document.querySelector('.minuto');
 const segundo = document.querySelector('.segundo');
 const styleDocument = document.documentElement.style;
 
-// Ajustes
+// Variables settings
 const menuAjustes = document.querySelector('.menu-ajustes');
 const pomoTime = document.getElementById('pomo-time-ajustes');
 const breakTime = document.getElementById('break-time-ajustes');
@@ -41,8 +41,7 @@ function alarma(){
     },4000)
 }
 
-
-
+// Settings
 const objSettings = {
     autoStartBreaks: false,
     autoStartPomodoros: false,
@@ -58,14 +57,89 @@ const objMidSection = {
     descansoActivo: 'Tiempo de descanso'
 }
 
+// Abrir DB para guardar settings
+function openDB() {
+    const IDBRequest = indexedDB.open('settings', 1);
+    return IDBRequest;
+}
+const openDBResponse = openDB();
+
+const crearDb = ()=>{
+    const dbSettings = openDBResponse.result;
+    dbSettings.createObjectStore("settings",{
+        autoIncrement: true
+    })
+}
+const agregarSettings = (objeto, key)=>{
+    const db = openDBResponse.result;
+    const IDBtransaction = db.transaction("settings", "readwrite");
+    const objectStore = IDBtransaction.objectStore("settings");
+    objectStore.put(objeto, key);
+}
+const leerSettings = ()=>{
+    return new Promise((resolve, reject) => {
+        const db = openDBResponse.result;
+        const IDBtransaction = db.transaction("settings", "readonly");
+        const objectStore = IDBtransaction.objectStore("settings");
+        const leerObjeto = objectStore.openCursor();
+        const settingsInArray = [];
+        leerObjeto.addEventListener('success', ()=>{
+            if(leerObjeto.result) {
+                settingsInArray.push(leerObjeto.result.value);
+                leerObjeto.result.continue();
+            } else {
+                resolve(settingsInArray);
+            }
+        });
+        leerObjeto.addEventListener('error', () => {
+            reject(leerObjeto.error);
+        });
+})}
+const pintarContent = ()=>{
+    btnComenzar.textContent = objMidSection.btnText;
+    minuto.textContent = objSettings.pomodoroTime;
+    cantidadCiclos.textContent = objMidSection.cantidadCiclos;
+    msgCiclos.textContent = objMidSection.tareaActiva;
+    objSettings.longBreakInterval = parseInt(intervalosLong.value);
+}
+
+openDBResponse.onupgradeneeded = ()=>{
+    console.log('DB creada');
+    crearDb();
+    pintarContent();
+}
+openDBResponse.onsuccess = ()=>{
+    console.log('DB leída');
+    settingsInArray = leerSettings();
+    settingsInArray.then((array)=>{
+        if(array.length !== 0) {
+            objSettings.autoStartBreaks = Object.values(array[0])[0];
+            objSettings.autoStartPomodoros = Object.values(array[1])[0];
+            objSettings.longBreakInterval = Object.values(array[2])[0];
+            objSettings.pomodoroTime = Object.values(array[3])[0];
+            objSettings.breakTime = Object.values(array[4])[0];
+            objSettings.longTime = Object.values(array[5])[0];
+
+            pomoTime.value = (''+parseInt(objSettings.pomodoroTime)).slice(-2);
+            breakTime.value = (''+parseInt(objSettings.breakTime)).slice(-2);
+            longTime.value = (''+parseInt(objSettings.longTime)).slice(-2);
+            if(objSettings.autoStartBreaks) {
+                autoBreak.checked = true;
+            }
+            if(objSettings.autoStartPomodoros) {
+                autoPomo.checked = true;
+            }
+            intervalosLong.value = objSettings.longBreakInterval;
+            pintarContent();
+
+        } else pintarContent();
+    })
+}
+
 let minutosDelCiclo; 
 let segundosDelCiclo;
 let temporizador;
 let temporizadorTotal;
-btnComenzar.textContent = objMidSection.btnText;
-minuto.textContent = objSettings.pomodoroTime;
-cantidadCiclos.textContent = objMidSection.cantidadCiclos;
-msgCiclos.textContent = objMidSection.tareaActiva;
 
 function transitionPomo(){
     clearInterval(temporizador);
@@ -245,45 +319,20 @@ function guardarSettings() {
         minuto.textContent = objSettings.longTime;
     }
 
-
     // Almacenar settings en indexedDB
-    const IDBRequest = indexedDB.open('settings', 1);
+    const openDBResponse = openDB();
 
-    IDBRequest.addEventListener('upgradeneeded',()=>{
-        const dbSettings = IDBRequest.result;
-        dbSettings.createObjectStore("settings",{
-            autoIncrement: true
-        })
+    openDBResponse.addEventListener('error',()=>{
+        crearDb();
     })
-
-    const agregarSettings = (objeto, key)=>{
-        const db = IDBRequest.result;
-        const IDBtransaction = db.transaction("settings", "readwrite");
-        const objectStore = IDBtransaction.objectStore("settings");
-        objectStore.put(objeto, key);
-    }
-    const leerSettings = ()=>{
-        const db = IDBRequest.result;
-        const IDBtransaction = db.transaction("settings", "readonly");
-        const objectStore = IDBtransaction.objectStore("settings");
-        const leerObjeto = objectStore.openCursor();
-        leerObjeto.addEventListener('success', ()=>{
-            if(leerObjeto.result) {
-                console.log(leerObjeto.result.value);
-                leerObjeto.result.continue();
-            }
-        })
-    }
-
-    IDBRequest.addEventListener('success', ()=>{
-        const settingsKeys = Object.keys(objSettings);
+    openDBResponse.addEventListener('success', ()=>{
         const settingsValues = Object.values(objSettings);
-        for(let i = 0; i < settingsKeys.length; i++){
+        for(let i = 0; i < settingsValues.length; i++){
             let value = settingsValues[i];
             let objeto = {key: value}
             agregarSettings(objeto, i+1);
         }
-        leerSettings()
+        console.log('DB actualizada');
     })
 
     transitionPomo();
@@ -292,6 +341,7 @@ function guardarSettings() {
     sectionMid.classList.remove('reduceOpacity');
     sectionBottom.classList.remove('reduceOpacity');
 }
+
 function abrirMenu(e) {
     e.preventDefault()
     menuAjustes.classList.toggle('menu-settings-active');
