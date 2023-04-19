@@ -201,6 +201,7 @@ function comenzarTemporizador() {
         btnSkip.style.display = 'none';
     }
 }
+
 function skipearTemporizador() {
     clearInterval(temporizador);
     clearTimeout(temporizadorTotal);
@@ -225,6 +226,7 @@ function skipearTemporizador() {
         transitionPomo();
     }
 }
+
 function guardarSettings() {
     clearInterval(temporizador);
     clearTimeout(temporizadorTotal);
@@ -242,8 +244,49 @@ function guardarSettings() {
     } else {
         minuto.textContent = objSettings.longTime;
     }
-    transitionPomo();
 
+
+    // Almacenar settings en indexedDB
+    const IDBRequest = indexedDB.open('settings', 1);
+
+    IDBRequest.addEventListener('upgradeneeded',()=>{
+        const dbSettings = IDBRequest.result;
+        dbSettings.createObjectStore("settings",{
+            autoIncrement: true
+        })
+    })
+
+    const agregarSettings = (objeto, key)=>{
+        const db = IDBRequest.result;
+        const IDBtransaction = db.transaction("settings", "readwrite");
+        const objectStore = IDBtransaction.objectStore("settings");
+        objectStore.put(objeto, key);
+    }
+    const leerSettings = ()=>{
+        const db = IDBRequest.result;
+        const IDBtransaction = db.transaction("settings", "readonly");
+        const objectStore = IDBtransaction.objectStore("settings");
+        const leerObjeto = objectStore.openCursor();
+        leerObjeto.addEventListener('success', ()=>{
+            if(leerObjeto.result) {
+                console.log(leerObjeto.result.value);
+                leerObjeto.result.continue();
+            }
+        })
+    }
+
+    IDBRequest.addEventListener('success', ()=>{
+        const settingsKeys = Object.keys(objSettings);
+        const settingsValues = Object.values(objSettings);
+        for(let i = 0; i < settingsKeys.length; i++){
+            let value = settingsValues[i];
+            let objeto = {key: value}
+            agregarSettings(objeto, i+1);
+        }
+        leerSettings()
+    })
+
+    transitionPomo();
     menuAjustes.classList.remove('menu-settings-active');
     sectionTop.classList.remove('reduceOpacity');
     sectionMid.classList.remove('reduceOpacity');
