@@ -304,12 +304,23 @@ function skipearTemporizador() {
 function guardarSettings() {
     clearInterval(temporizador);
     clearTimeout(temporizadorTotal);
+
+    if(typeof(parseInt(pomoTime.value)) !== 'number' || pomoTime.value == 0) {
+        pomoTime.value = 1;
+    }
+    if(typeof(parseInt(breakTime.value)) !== 'number' || breakTime.value == 0) {
+        breakTime.value = 1
+    }
+    if(typeof(parseInt(longTime.value)) !== 'number' || longTime.value == 0) {
+        longTime.value = 1
+    }
     objSettings.pomodoroTime = ('0'+parseInt(pomoTime.value)).slice(-2);
     objSettings.breakTime = ('0'+parseInt(breakTime.value)).slice(-2);
     objSettings.longTime = ('0'+parseInt(longTime.value)).slice(-2);
     objSettings.autoStartBreaks = autoBreak.checked;
     objSettings.autoStartPomodoros = autoPomo.checked;
     objSettings.longBreakInterval = parseInt(intervalosLong.value);
+
 
     if (ciclosSelect[0].className === 'ciclos-select') {
         minuto.textContent = objSettings.pomodoroTime;
