@@ -38,7 +38,7 @@ function alarma(){
     audioElement.play();
     setTimeout(()=>{
         audioElement.pause()
-    },4000)
+    },2500)
 }
 
 // Settings
