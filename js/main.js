@@ -46,12 +46,12 @@ function alarma(){
 const objSettings = {
     autoStartBreaks: false,
     autoStartPomodoros: false,
-    longBreakInterval: 4
-}
-const objMidSection = {
+    longBreakInterval: 4,
     pomodoroTime: ('0'+25).slice(-2),
     breakTime: ('0'+5).slice(-2),
-    longTime: ('0'+15).slice(-2),
+    longTime: ('0'+15).slice(-2)
+}
+const objMidSection = {
     btnText: 'Iniciar',
     cantidadCiclos: 0,
     tareaActiva: '¡Tiempo para enfocarse!',
@@ -63,7 +63,7 @@ let segundosDelCiclo;
 let temporizador;
 let temporizadorTotal;
 btnComenzar.textContent = objMidSection.btnText;
-minuto.textContent = objMidSection.pomodoroTime;
+minuto.textContent = objSettings.pomodoroTime;
 cantidadCiclos.textContent = objMidSection.cantidadCiclos;
 msgCiclos.textContent = objMidSection.tareaActiva;
 
@@ -81,7 +81,7 @@ function transitionPomo(){
     objMidSection.btnText = 'Iniciar';
     btnComenzar.textContent = objMidSection.btnText;
     msgCiclos.textContent = objMidSection.tareaActiva;
-    minuto.textContent = objMidSection.pomodoroTime;
+    minuto.textContent = objSettings.pomodoroTime;
     segundo.textContent = '00';
 
     if(listaTareas.length !== 0) {
@@ -106,7 +106,7 @@ function transitionBreak(){
     objMidSection.btnText = 'Iniciar';
     btnComenzar.textContent = objMidSection.btnText;
     msgCiclos.textContent = objMidSection.descansoActivo;
-    minuto.textContent = objMidSection.breakTime;
+    minuto.textContent = objSettings.breakTime;
     segundo.textContent = '00';
 }
 function transitionLong(){
@@ -123,7 +123,7 @@ function transitionLong(){
     objMidSection.btnText = 'Iniciar';
     btnComenzar.textContent = objMidSection.btnText;
     msgCiclos.textContent = objMidSection.descansoActivo;
-    minuto.textContent = objMidSection.longTime;
+    minuto.textContent = objSettings.longTime;
     segundo.textContent = '00';
 }
 
@@ -228,19 +228,19 @@ function skipearTemporizador() {
 function guardarSettings() {
     clearInterval(temporizador);
     clearTimeout(temporizadorTotal);
-    objMidSection.pomodoroTime = ('0'+parseInt(pomoTime.value)).slice(-2);
-    objMidSection.breakTime = ('0'+parseInt(breakTime.value)).slice(-2);
-    objMidSection.longTime = ('0'+parseInt(longTime.value)).slice(-2);
+    objSettings.pomodoroTime = ('0'+parseInt(pomoTime.value)).slice(-2);
+    objSettings.breakTime = ('0'+parseInt(breakTime.value)).slice(-2);
+    objSettings.longTime = ('0'+parseInt(longTime.value)).slice(-2);
     objSettings.autoStartBreaks = autoBreak.checked;
     objSettings.autoStartPomodoros = autoPomo.checked;
     objSettings.longBreakInterval = parseInt(intervalosLong.value);
 
     if (ciclosSelect[0].className === 'ciclos-select') {
-        minuto.textContent = objMidSection.pomodoroTime;
+        minuto.textContent = objSettings.pomodoroTime;
     } else if (ciclosSelect[1].className === 'ciclos-select'){
-        minuto.textContent = objMidSection.breakTime;
+        minuto.textContent = objSettings.breakTime;
     } else {
-        minuto.textContent = objMidSection.longTime;
+        minuto.textContent = objSettings.longTime;
     }
     transitionPomo();
 
