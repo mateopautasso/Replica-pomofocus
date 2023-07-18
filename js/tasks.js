@@ -44,7 +44,9 @@ btnTareaMenuCancelar.addEventListener('click', ()=>{
     agregarTareaMenu.classList.remove('agregar-tarea-active');
 })
 
-
+function btnCheck () {
+    event.target.classList.toggle('btn-tarea-checked');
+}
 
 // Nuevas Cards
 
@@ -56,8 +58,8 @@ class NewCard {
         this.position = position;
         this.checked = false;
         this.body = `<div class="card__left">
-                <div class="${position} card__check"></div>
-                <p class="card__title-tarea">${name}<span class="card__line-check"></span></p>
+                <div onclick="btnCheck()" class="${position} card__check"></div>
+                <p class="card__title-tarea">${name}</p>
             </div>
             <div class="card__right">
                 <div>
@@ -86,20 +88,10 @@ class NewCard {
                 </div>    
             </div>`
     }
-    checkTarea() {
-        if(this.checked === false) {
-            this.checked = true;
-        } else {
-            this.checked = false;
-        }
-    }
 }
 
 let listaTareas = [];
-let funcionCheck;
 let cardOptions;
-let btnCheck;
-let lineCheck;
 let positionEnArray;
 let pomosDeCardModified;
 let pomosRestDeCardModified;
@@ -178,16 +170,6 @@ function guardarNuevaTarea() {
     msgCiclos.textContent = objMidSection.tareaActiva;  
 
     agregarTareaMenu.classList.remove('agregar-tarea-active');
-
-    btnCheck = document.querySelectorAll('.card__check');
-    lineCheck = document.querySelectorAll('.card__line-check');
-    funcionCheck = btnCheck.forEach(btn => {
-        btn.addEventListener('click', (e)=>{
-            e.target.classList.toggle('btn-tarea-checked');
-            lineCheck[parseInt(e.target.className[0]) - 1].classList.toggle('tarea-checked')
-            newTarea.checkTarea();
-        })
-    });
 
     const btnCardOptions = document.querySelectorAll('.card__btn-options');
     btnCardOptions.forEach((btn)=>{

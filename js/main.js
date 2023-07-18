@@ -162,7 +162,9 @@ function transitionPomo(){
         let tareaEnCola = listaTareas.find((tarea)=>{
             return tarea.pomosRestantes != '0';
         })
-        objMidSection.tareaActiva = tareaEnCola.name;
+        if(tareaEnCola) {
+            objMidSection.tareaActiva = tareaEnCola.name;
+        }
         msgCiclos.textContent = objMidSection.tareaActiva;  
     }
 }
